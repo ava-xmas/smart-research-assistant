@@ -1,0 +1,23 @@
+# Default settings for the Smart Research & Synthesis Assistant.
+# main.py currently reads most of these via CLI flags; this file documents
+# the tunable knobs and is a natural place to load overrides from if you
+# extend the CLI (e.g. `--config config.yaml`).
+
+model:
+  name: claude-sonnet-4-6
+  max_tokens: 1500
+  temperature: 0.4
+
+orchestrator:
+  max_rounds: 8
+  max_messages: 12
+  termination_phrase: "REPORT_COMPLETE"
+
+sources:
+  arxiv_max_results: 6
+  web_max_results: 6
+  min_keyword_overlap: 1
+
+evaluation:
+  judge_model: claude-sonnet-4-6
+  dimensions: [accuracy, completeness, clarity, actionability]

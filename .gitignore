@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+outputs/*.json
+outputs/*.csv
+outputs/*.png
+outputs/*.md
+!outputs/.gitkeep
