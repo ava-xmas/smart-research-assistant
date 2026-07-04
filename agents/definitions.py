@@ -7,11 +7,11 @@ model clients (e.g. a cheaper model for the baseline comparison).
 
 from __future__ import annotations
 
-from picoagents_lite import Agent, AnthropicModelClient
+from picoagents_lite import Agent, OpenAIModelClient
 from tools import arxiv_search_tool, web_search_tool
 
 
-def build_researcher(model_client: AnthropicModelClient) -> Agent:
+def build_researcher(model_client: OpenAIModelClient) -> Agent:
     return Agent(
         name="Researcher",
         instructions=(
@@ -26,7 +26,7 @@ def build_researcher(model_client: AnthropicModelClient) -> Agent:
     )
 
 
-def build_writer(model_client: AnthropicModelClient) -> Agent:
+def build_writer(model_client: OpenAIModelClient) -> Agent:
     return Agent(
         name="Writer",
         instructions=(
@@ -42,7 +42,7 @@ def build_writer(model_client: AnthropicModelClient) -> Agent:
     )
 
 
-def build_critic(model_client: AnthropicModelClient) -> Agent:
+def build_critic(model_client: OpenAIModelClient) -> Agent:
     return Agent(
         name="Critic",
         instructions=(

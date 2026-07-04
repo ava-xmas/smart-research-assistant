@@ -2,7 +2,7 @@
 Step 1 - parse_query_step (Ch. 4: structured output).
 
 Turns a free-text user query into a structured ResearchPlan using a forced
-tool-call (see AnthropicModelClient.structured). Structured output here
+tool-call (see OpenAIModelClient.structured). Structured output here
 means every downstream step can rely on a stable schema instead of parsing
 free text.
 """

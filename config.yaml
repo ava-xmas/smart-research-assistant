@@ -4,7 +4,7 @@
 # extend the CLI (e.g. `--config config.yaml`).
 
 model:
-  name: claude-sonnet-4-6
+  name: openai/gpt-oss-120b
   max_tokens: 1500
   temperature: 0.4
 
@@ -19,5 +19,5 @@ sources:
   min_keyword_overlap: 1
 
 evaluation:
-  judge_model: claude-sonnet-4-6
+  judge_model: openai/gpt-oss-120b
   dimensions: [accuracy, completeness, clarity, actionability]

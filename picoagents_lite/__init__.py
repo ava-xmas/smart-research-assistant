@@ -2,7 +2,8 @@
 picoagents_lite
 ================
 A small, self-contained multi-agent framework (Agent, Workflow, Orchestrator,
-Termination conditions, Tracing) built directly on the Anthropic Messages API.
+Termination conditions, Tracing) built on Groq's OpenAI-compatible chat
+completions API.
 
 This is a from-scratch, runnable implementation of the concepts described in
 the "Smart Research & Synthesis Assistant" project plan:
@@ -14,7 +15,7 @@ the "Smart Research & Synthesis Assistant" project plan:
 """
 
 from .agent import Agent
-from .model_client import AnthropicModelClient
+from .model_client import OpenAIModelClient
 from .orchestrator import AIOrchestrator
 from .termination import MaxMessageTermination, TextMentionTermination
 from .workflow import Workflow, WorkflowMetadata
@@ -22,7 +23,7 @@ from .tracing import Tracer
 
 __all__ = [
     "Agent",
-    "AnthropicModelClient",
+    "OpenAIModelClient",
     "AIOrchestrator",
     "MaxMessageTermination",
     "TextMentionTermination",

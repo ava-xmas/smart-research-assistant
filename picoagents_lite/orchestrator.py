@@ -24,7 +24,7 @@ from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from .agent import Agent
-from .model_client import AnthropicModelClient
+from .model_client import OpenAIModelClient
 from .termination import TerminationCondition
 from .tracing import Tracer
 
@@ -43,7 +43,7 @@ class RouteDecision(BaseModel):
 class AIOrchestrator:
     agents: List[Agent]
     termination: TerminationCondition
-    model_client: AnthropicModelClient  # used for routing decisions
+    model_client: OpenAIModelClient  # used for routing decisions
     max_rounds: int = 10
 
     history: List[Dict[str, str]] = field(default_factory=list, init=False)

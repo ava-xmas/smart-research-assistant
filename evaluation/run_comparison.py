@@ -14,7 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from picoagents_lite import AnthropicModelClient, Tracer, Workflow, WorkflowMetadata
+from picoagents_lite import OpenAIModelClient, Tracer, Workflow, WorkflowMetadata
 from evaluation.baseline import run_single_agent_baseline
 from evaluation.evaluator import EvalRunner
 from evaluation.tasks import TASKS
@@ -27,7 +27,7 @@ from steps import (
 
 
 def run_multi_agent_system(task: dict) -> str:
-    model_client = AnthropicModelClient(model="claude-sonnet-4-6")
+    model_client = OpenAIModelClient(model="openai/gpt-oss-120b")
     workflow = (
         Workflow(metadata=WorkflowMetadata(name="Smart Research Assistant"))
         .chain(parse_query_step, filter_sources_step, multi_agent_research_step, synthesize_report_step)
@@ -38,12 +38,12 @@ def run_multi_agent_system(task: dict) -> str:
 
 
 def run_baseline_system(task: dict) -> str:
-    model_client = AnthropicModelClient(model="claude-sonnet-4-6")
+    model_client = OpenAIModelClient(model="openai/gpt-oss-120b")
     return run_single_agent_baseline(task["query"], model_client)
 
 
 def main() -> None:
-    judge_client = AnthropicModelClient(model="claude-sonnet-4-6", temperature=0)
+    judge_client = OpenAIModelClient(model="openai/gpt-oss-120b", temperature=0)
     runner = EvalRunner(judge_model_client=judge_client)
 
     runner.evaluate_system("single_agent_baseline", run_baseline_system, TASKS)

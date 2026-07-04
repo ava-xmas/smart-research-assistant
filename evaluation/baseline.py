@@ -7,11 +7,11 @@ planning step, no Writer, no Critic.
 
 from __future__ import annotations
 
-from picoagents_lite import Agent, AnthropicModelClient
+from picoagents_lite import Agent, OpenAIModelClient
 from tools import arxiv_search_tool, web_search_tool
 
 
-def run_single_agent_baseline(query: str, model_client: AnthropicModelClient) -> str:
+def run_single_agent_baseline(query: str, model_client: OpenAIModelClient) -> str:
     agent = Agent(
         name="BaselineAgent",
         instructions=(

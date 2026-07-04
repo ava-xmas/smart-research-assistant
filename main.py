@@ -3,10 +3,10 @@ Smart Research & Synthesis Assistant - CLI entry point.
 
 Usage:
     python main.py "What are the key trends in autonomous AI agents for 2026?"
-    python main.py "..." --model claude-sonnet-4-6 --trace
+    python main.py "..." --model openai/gpt-oss-120b --trace
     python main.py --evaluate      # runs the full baseline-vs-multi-agent evaluation
 
-Requires ANTHROPIC_API_KEY to be set (see .env.example).
+Requires GROQ_API_KEY to be set (see .env.example).
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from picoagents_lite import AnthropicModelClient, Tracer, Workflow, WorkflowMetadata
+from picoagents_lite import OpenAIModelClient, Tracer, Workflow, WorkflowMetadata
 from steps import (
     filter_sources_step,
     multi_agent_research_step,
@@ -36,7 +36,7 @@ def build_workflow() -> Workflow:
 
 
 def run(query: str, model: str, max_rounds: int, show_trace: bool) -> None:
-    model_client = AnthropicModelClient(model=model)
+    model_client = OpenAIModelClient(model=model)
     tracer = Tracer(run_name="smart_research_assistant")
 
     workflow = build_workflow()
@@ -70,7 +70,7 @@ def run(query: str, model: str, max_rounds: int, show_trace: bool) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Smart Research & Synthesis Assistant")
     parser.add_argument("query", nargs="?", help="Research question to investigate")
-    parser.add_argument("--model", default="claude-sonnet-4-6", help="Anthropic model name")
+    parser.add_argument("--model", default="openai/gpt-oss-120b", help="Groq model name (see https://console.groq.com/docs/models)")
     parser.add_argument("--max-rounds", type=int, default=8, help="Max orchestrator rounds")
     parser.add_argument("--trace", action="store_true", help="Print the observability trace tree")
     parser.add_argument("--evaluate", action="store_true", help="Run the full evaluation harness")

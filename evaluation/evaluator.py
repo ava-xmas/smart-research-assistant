@@ -16,7 +16,7 @@ from typing import Callable, Dict, List
 
 from pydantic import BaseModel, Field
 
-from picoagents_lite import AnthropicModelClient
+from picoagents_lite import OpenAIModelClient
 
 
 class JudgeScore(BaseModel):
@@ -46,7 +46,7 @@ class EvalResult:
 
 
 class EvalRunner:
-    def __init__(self, judge_model_client: AnthropicModelClient):
+    def __init__(self, judge_model_client: OpenAIModelClient):
         self.judge = judge_model_client
         self.results: List[EvalResult] = []
 

@@ -133,7 +133,7 @@ class Tracer:
                     "start_time_unix_nano": int(s.start_time * 1e9),
                     "end_time_unix_nano": int((s.end_time or s.start_time) * 1e9),
                     "attributes": {
-                        "gen_ai.system": "anthropic",
+                        "gen_ai.system": "groq",
                         "gen_ai.request.model": s.attributes.get("model"),
                         "gen_ai.usage.input_tokens": s.attributes.get("input_tokens"),
                         "gen_ai.usage.output_tokens": s.attributes.get("output_tokens"),

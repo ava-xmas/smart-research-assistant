@@ -6,8 +6,8 @@ research and draft a report, and evaluates its own quality against a
 single-agent baseline — with built-in cost/latency tracing throughout.
 
 It's a working, from-scratch implementation of a small multi-agent framework
-(`picoagents_lite/`) on top of the Anthropic Messages API — no external
-agent framework required. Given a question like:
+(`picoagents_lite/`) on top of Groq's OpenAI-compatible chat completions
+API — no external agent framework required. Given a question like:
 
 > "What are the key trends in autonomous AI agents for 2026 and what are the main challenges?"
 
@@ -90,7 +90,7 @@ smart-research-assistant/
 ├── main.py                        # CLI entry point
 ├── picoagents_lite/                # the mini agent framework, built from scratch
 │   ├── agent.py                    #   Agent: system prompt + tool-use loop
-│   ├── model_client.py             #   AnthropicModelClient: chat() + structured()
+│   ├── model_client.py             #   OpenAIModelClient: chat() + structured()
 │   ├── orchestrator.py             #   AIOrchestrator: LLM-routed multi-agent turns
 │   ├── termination.py              #   MaxMessageTermination | TextMentionTermination
 │   ├── workflow.py                 #   Workflow: deterministic step chaining
@@ -122,10 +122,11 @@ git clone <this repo>
 cd smart-research-assistant
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # then add your ANTHROPIC_API_KEY
+cp .env.example .env   # then add your GROQ_API_KEY
 ```
 
-You only need `ANTHROPIC_API_KEY`. `SERPAPI_KEY` is optional — without it,
+You only need `GROQ_API_KEY` (free to create at https://console.groq.com/keys).
+`SERPAPI_KEY` is optional — without it,
 web search falls back to the free `ddgs` (DuckDuckGo) backend automatically.
 arXiv search never needs a key.
 
@@ -173,7 +174,7 @@ actionability**, and writes:
 
 | Concept | Where it lives | What it demonstrates |
 |---|---|---|
-| **Structured output** | `steps/parse_query.py`, `AnthropicModelClient.structured()` | Forcing a tool call with a Pydantic JSON schema instead of hoping the model formats JSON correctly |
+| **Structured output** | `steps/parse_query.py`, `OpenAIModelClient.structured()` | Forcing a tool call with a Pydantic JSON schema instead of hoping the model formats JSON correctly |
 | **Deterministic workflow** | `picoagents_lite/workflow.py` | Reliability and predictable cost for steps that don't need autonomy |
 | **Autonomous multi-agent orchestration** | `picoagents_lite/orchestrator.py` | An LLM decides turn-by-turn who speaks next and when the team is done, rather than a hard-coded sequence |
 | **Cost-aware engineering** | `steps/filter_sources.py`, `model_client.py` cost tracking | Cheap, LLM-free filtering before expensive agent calls; per-call cost logged everywhere |
@@ -203,7 +204,7 @@ zero extra infrastructure, while still being straightforward to upgrade.
 
 ## Extending the project
 
-- **Swap models per agent** — pass a cheaper `AnthropicModelClient(model="claude-haiku-4-5-20251001")`
+- **Swap models per agent** — pass a cheaper `OpenAIModelClient(model="openai/gpt-oss-20b")`
   to the Researcher (high tool-call volume, less reasoning-heavy) and keep a
   stronger model for the Writer/Critic — a natural next cost-optimization step.
 - **Add more tools** — e.g. a Wikipedia tool or an internal document search —
